@@ -1,16 +1,18 @@
 const fs = require('fs');
 
-function ls() {
+function cat(__filename) {
   process.stdin.on('data', (data) => {
     const cmd = data.toString().trim();
 
     process.stdout.write('You typed: ' + cmd);
-    if (cmd === 'ls') {
-      fs.readdir('./', 'utf8', (err, files) => {
+
+    if (cmd === 'cat' + __filename) {
+      console.log('IS THIS RUNNING');
+      fs.readFile(__filename, 'utf8', (err, file) => {
         if (err) {
           throw err;
         } else {
-          process.stdout.write(files.join('\n'));
+          console.log(file);
           process.stdout.write('\n prompt > ');
         }
       });
@@ -18,4 +20,4 @@ function ls() {
   });
 }
 
-module.exports = ls;
+module.exports = cat;
